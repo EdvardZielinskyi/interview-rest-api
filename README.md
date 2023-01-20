@@ -1,0 +1,4 @@
+# FLASK REST API
+
+FLASK REST API code.
+POST, PUT, DELETE methods
