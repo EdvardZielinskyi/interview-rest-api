@@ -84,7 +84,7 @@ class TestInterviewAPI(unittest.TestCase):
 
     # Test put method of existing interview record.
     def test_7_update_existing_interview(self):
-        id = "/63ca9388fe3a9790b6a4fc85"
+        id = "/63cea8ad096d9e1f9d683b4c"
         response = requests.put(self.API_URL + id, json=self.UPDATED_INTERVIEW_OBJECT)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["message"], "Interview record updated")
@@ -98,7 +98,7 @@ class TestInterviewAPI(unittest.TestCase):
 
     # Test delete method of existing interview record.
     def test_9_delete_existing_interview(self):
-        id = "/63ca9388fe3a9790b6a4fc85"
+        id = "/63cea8ad096d9e1f9d683b4c"
         response = requests.delete(self.API_URL + id)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["message"], "Interview record deleted")

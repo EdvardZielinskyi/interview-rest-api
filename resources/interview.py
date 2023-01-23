@@ -43,33 +43,36 @@ class InterviewCreate(MethodView):
 
 @blp.route("/interview/<id>")
 class InterviewUpdateDelete(MethodView):
-    """Update the existing interview record."""
 
     @blp.arguments(InterviewUpdateSchema)
     def put(self, interview_data, id):
+        """Update the existing interview record."""
+
+        interview_to_update = {"_id": ObjectId(id)}
 
         # Check if interview record exists or not in database.
-        if not interview_collection.find_one({"_id": ObjectId(id)}):
+        if not interview_collection.find_one(interview_to_update):
             abort(404, message="Interview is not found.")
 
         # Update the interview record. Only note field is allowed to be updated
-        interview_collection.update_one(
-            {"_id": ObjectId(id)},
-            {"$set": {
-                "note": interview_data["note"],
-                "date_time_updated_record": datetime.now().strftime("%Y-%m-%d %H:%M")
-            }}
-        )
+        new_interview_note = {"$set": {
+            "note": interview_data["note"],
+            "date_time_updated_record": datetime.now().strftime("%Y-%m-%d %H:%M")
+        }}
+        interview_collection.update_one(interview_to_update, new_interview_note)
 
         return {"message": "Interview record updated"}
 
     def delete(self, id):
+        """Delete the existing interview record."""
+
+        interview_to_update = {"_id": ObjectId(id)}
 
         # Check if interview record exists or not in database.
-        if not interview_collection.find_one({"_id": ObjectId(id)}):
+        if not interview_collection.find_one(interview_to_update):
             abort(404, message="Interview is not found.")
 
         # Delete the interview record.
-        interview_collection.delete_one({"_id": ObjectId(id)})
+        interview_collection.delete_one(interview_to_update)
 
         return {"message": "Interview record deleted"}
